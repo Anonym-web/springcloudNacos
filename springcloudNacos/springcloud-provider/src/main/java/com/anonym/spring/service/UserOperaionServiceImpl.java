@@ -41,13 +41,12 @@ public class UserOperaionServiceImpl implements UserOperaionService {
     private UserMapper userMapper;
 
     @Resource
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,Object> redisTemplate;
 
     @Transactional
     @Override
     public ResultSet login(User user) throws IOException, ClassNotFoundException {
         ResultSet resultSet = new ResultSet();
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
         User returnUser = new User();
         String password = MD5Util.encrypt(user.getPassword());
         /*redis中如果存在此key，比较密码*/
@@ -67,7 +66,7 @@ public class UserOperaionServiceImpl implements UserOperaionService {
                 resultSet.setRetVal("用户名或密码错误");
                 return resultSet;
             }*/
-            User redisUser = (User) redisUtils.getObject(user.getName());
+            User redisUser = (User) redisUtils.get(user.getName());
             if(password.equals(redisUser.getPassword())){
                 resultSet.setRetCode("1");
                 resultSet.setRetVal("");

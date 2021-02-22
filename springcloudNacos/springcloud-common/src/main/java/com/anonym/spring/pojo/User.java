@@ -24,6 +24,21 @@ public class User implements Serializable {
         return serialVersionUID;
     }
 
+    public User() {
+    }
+
+    public User(Long id, String name, String phone, String email, String password, String type, String addr, String createTime, String updateTime) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.type = type;
+        this.addr = addr;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
+
     public Long getId() {
         return id;
     }
